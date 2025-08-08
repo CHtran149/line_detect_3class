@@ -20,7 +20,7 @@ class LineFollowerROS2(Node):
         self.v_fixed = 0.4
         self.turn_start_time = None
         self.state = "STRAIGHT"
-        self.model = YOLO(r"E:\\line_following_detection.v3i.darknet\\runs\\detect\\line_follow_exp12\\weights\\best.pt")
+        self.model = YOLO(r"/root/ros2_ws/src/line_detections/models/best.pt")
 
         # Timer để gọi hàm xử lý frame khoảng 10-15 Hz (100 ms)
         self.timer = self.create_timer(0.1, self.timer_callback)
@@ -47,11 +47,11 @@ class LineFollowerROS2(Node):
 
         if class_id == 0:  # left turn
             self.state = "TURN_LEFT_90"
-            w = self.clamp(1.5, -math.pi/2, math.pi/2)  # tốc độ góc dương
+            w = self.clamp(1.5, -math.pi/2, math.pi/2)  
             self.turn_start_time = time.time()
         elif class_id == 1:  # right turn
             self.state = "TURN_RIGHT_90"
-            w = self.clamp(-1.5, -math.pi/2, math.pi/2)  # tốc độ góc âm
+            w = self.clamp(-1.5, -math.pi/2, math.pi/2)  
             self.turn_start_time = time.time()
         elif class_id == 2:  # straight
             self.state = "STRAIGHT"
@@ -73,7 +73,7 @@ class LineFollowerROS2(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = LineFollowerROS2(video_source=0)  # Hoặc đường dẫn video
+    node = LineFollowerROS2(video_source=0)  
     rclpy.spin(node)
     node.cap.release()
     cv2.destroyAllWindows()
