@@ -69,12 +69,7 @@ class LineFollowerROS2(Node):
 
         self.get_logger().info(f"State: {self.state} | v: {twist.linear.x:.2f}, w: {twist.angular.z:.2f}")
 
-        # Hiển thị video cho debug
-        cv2.putText(frame_resized, f"State: {self.state}", (10, 20),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-        cv2.imshow("Line Detection ROS2", frame_resized)
-        if cv2.waitKey(1) & 0xFF == 27:
-            rclpy.shutdown()
+        
 
 def main(args=None):
     rclpy.init(args=args)
